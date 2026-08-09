@@ -17,6 +17,11 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Friendly root landing page
+app.get('/', (req, res) => {
+  res.send('ChatWave Real-Time Backend Server is Running! 🚀');
+});
+
 // Initialize SQLite database
 await initDB();
 

@@ -99,7 +99,12 @@ app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) {
     return next();
   }
-  res.sendFile(path.join(frontendBuildPath, 'index.html'));
+  res.sendFile(path.join(frontendBuildPath, 'index.html'), (err) => {
+    if (err) {
+      console.error('Failed to send index.html. Resolved path:', path.join(frontendBuildPath, 'index.html'), 'Error:', err.message);
+      res.status(500).send('Error loading frontend assets. Please verify the build files.');
+    }
+  });
 });
 
 // Set up server and Socket.io

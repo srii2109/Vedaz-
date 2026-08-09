@@ -4,7 +4,8 @@ import Login from './components/Login';
 import Sidebar from './components/Sidebar';
 import ChatArea from './components/ChatArea';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 
+  (window.location.origin.includes('localhost') ? 'http://localhost:5000' : window.location.origin);
 
 export default function App() {
   const [username, setUsername] = useState(() => {

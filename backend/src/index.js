@@ -4,6 +4,8 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { initDB, run, all } from './db.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
@@ -17,10 +19,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Friendly root landing page
-app.get('/', (req, res) => {
-  res.send('ChatWave Real-Time Backend Server is Running! 🚀');
-});
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const frontendBuildPath = path.resolve(__dirname, '../../frontend/dist');
+
+app.use(express.static(frontendBuildPath));
 
 // Initialize SQLite database
 await initDB();
@@ -90,6 +92,14 @@ app.delete('/api/messages/:id', async (req, res) => {
     console.error('Failed to delete message:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// Fallback for SPA routing: serve index.html for any non-API routes
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile(path.join(frontendBuildPath, 'index.html'));
 });
 
 // Set up server and Socket.io

@@ -100,6 +100,24 @@ Vedaz/
 
 ---
 
+## Deployment (Single-Service Monolith)
+
+Since the backend is configured to serve the built frontend statically, you can deploy both on Render as a **single Web Service**!
+
+1. Log in to [Render](https://render.com/).
+2. Click **New +** ➜ **Web Service**.
+3. Connect your GitHub repository: `srii2109/Vedaz-`.
+4. Configure the settings:
+   - **Root Directory**: *(Leave blank)*
+   - **Build Command**: `npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend`
+   - **Start Command**: `npm start --prefix backend`
+   - **Instance Type**: `Free`
+5. Click **Deploy Web Service**.
+
+Once the deployment completes, open your primary URL to access the entire application (both the React frontend and Socket.io backend running together)!
+
+---
+
 ## Assumptions Made
 
 1. **Single Public Room**: It is assumed that all users join a single public lobby room where everyone broadcasts messages together.

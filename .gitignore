@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.db
+.env
+.env.local
+.DS_Store
+backend/node_modules/
+frontend/node_modules/
+backend/chat.db
+frontend/dist/
